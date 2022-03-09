@@ -1,0 +1,37 @@
+.form-label,
+.form-message {
+  text-align: left;
+}
+.form-label {
+  color: #000;
+  font-size: 20px;
+}
+.form-group-cls.invalid .form-control {
+  border-color: #f33a58;
+}
+
+.form-group-cls.invalid .form-message {
+  color: #f33a58;
+}
+
+.form-message {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  padding: 4px 0 0;
+}
+body,
+html {
+  /* height: 100%; */
+  background-repeat: no-repeat;
+  background-color: aquamarine;
+}
+
+.card-container.card {
+  max-width: 500px;
+  margin: 20vh auto;
+  padding: 20px 20px;
+}
+
+.input-group i {
+  width: 16px;
+}
