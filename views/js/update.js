@@ -67,7 +67,7 @@ $(document).ready(function () {
           );
         },
         error: function (err) {
-          alert("err", err);
+          alert("Please change your data", err);
         },
       });
     };

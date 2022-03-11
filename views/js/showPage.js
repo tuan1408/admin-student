@@ -18,7 +18,7 @@ $(document).ready(function () {
   const token = localStorage.getItem("token");
   const check = isTokenExpired(token);
   // check hiệu lực token
-  if (!isTokenExpired(token)) {
+  if (!check) {
     //submit form
     $("#form-search").submit(function (e) {
       e.preventDefault();

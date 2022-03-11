@@ -18,7 +18,7 @@ if($is_jwt_valid) {
     
     $item = new Students($db);  //tạo đối tượng từ lớp Students
     
-    $item->id = isset($_POST['id']) ? $_POST['id'] : die();  // kiểm tra nếu tồn tại thì sẽ lấy id
+    $item->id = isset($_POST['id']) ? $_POST['id'] : "";  // kiểm tra nếu tồn tại thì sẽ lấy id
     // dữ liệu phục vụ cập nhật
     $item-> profile_code = $_POST['profile_code'];
     $item-> student_code = $_POST['student_code'];
