@@ -11,9 +11,9 @@ include_once('../../config/database.php');
 include_once('../../model/students.php');
 include_once('../../libs/jwt.php');
 
+// check isvalid jwt
 $bearer_token = get_bearer_token();
 $is_jwt_valid = is_jwt_valid($bearer_token);
-
 if($is_jwt_valid) {
     $database = new Database();  //tạo đối tượng từ lớp Database
     $db = $database->getConnection();  //gọi đến phương thức get để lấy kết nối csdl
@@ -24,7 +24,7 @@ if($is_jwt_valid) {
     $itemCount = $records->num_rows; //trả về số hàng
     json_encode($itemCount); // chuyển sang json
 
-    $item-> readFirstPage();
+    $item-> readFirstPage(); //gọi đến phương thức readFirstPage
 
 }else {
     echo 'error';

@@ -183,7 +183,9 @@ class Students {
         }
     }
 
+    // hiển thị trang đầu tiên của bảng, chứa 5 bản ghi
     function readFirstPage() {
+        // số bản ghi trên 1 trang
         $row_per_page = 5;
         $sqlQuery = "SELECT * FROM students LIMIT $row_per_page";
         $data = "SELECT * FROM students";
@@ -199,7 +201,6 @@ class Students {
 
         if($countRowPerPage > 0) {
             while($row = $result->fetch_assoc()){
-
                 $records = array(
                     "id"=>$row["id"],
                     "profile_code"=>$row["profile_code"],
@@ -228,6 +229,7 @@ class Students {
         }
     }
 
+    // hiển thị các bản ghi mỗi khi người dùng call api, mỗi lần lấy 5 bản ghi
     function paginationPage() {
         $row_per_page = 5;
         if(isset($_GET['page'])) {
@@ -310,6 +312,4 @@ class Students {
             }
         }
     }
-
-    
 }

@@ -9,17 +9,16 @@ include_once('../../config/database.php');
 include_once('../../model/students.php');
 include_once('../../libs/jwt.php');
 
-$database = new Database();  //tạo đối tượng từ lớp Database
-$db = $database->getConnection();  //gọi đến phương thức getConnection để lấy kết nối csdl
-
-$item = new Students($db);  //tạo đối tượng từ lớp Students
-
-$item->id = isset($_POST['id']) ? $_POST['id'] : die();  // kiểm tra nếu tồn tại thì sẽ lấy id
-
+//check isvalid jwt
 $bearer_token = get_bearer_token();
 $is_jwt_valid = is_jwt_valid($bearer_token);
-
 if($is_jwt_valid) {
+    $database = new Database();  //tạo đối tượng từ lớp Database
+    $db = $database->getConnection();  //gọi đến phương thức getConnection để lấy kết nối csdl
+    
+    $item = new Students($db);  //tạo đối tượng từ lớp Students
+    
+    $item->id = isset($_POST['id']) ? $_POST['id'] : die();  // kiểm tra nếu tồn tại thì sẽ lấy id
     // dữ liệu phục vụ cập nhật
     $item-> profile_code = $_POST['profile_code'];
     $item-> student_code = $_POST['student_code'];

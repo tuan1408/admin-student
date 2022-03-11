@@ -38,36 +38,37 @@ function is_jwt_valid($jwt, $secret = 'secret') {
     //xây dựng chữ kí dựa trên header, payload bằng secret key
     $base64_url_header = base64url_encode($header);
 	$base64_url_payload = base64url_encode($payload);
+    // sử dụng thuật toán để băm
     $signature = hash_hmac('SHA256', $base64_url_header . "." . $base64_url_payload, $secret, true);
 	$base64_url_signature = base64url_encode($signature);
 
     // xác minh chữ kí có khớp với chữ kí được tạo trong jwt không
     $is_signature_valid = (($base64_url_signature) === $signature_provided);
 
+    // kiểm tra sự hợp lệ
     if($is_token_expired || !$is_signature_valid) {
         return false;
     }else {
         return true;
     }
 }
-// get authorization
+// get authorization header
 function get_authorization_header() {
     $headers = null;
-
+    // $_SERVER là một mảng chứa thông tin như header, path và vị trí script. 
+    //Các entry trong mảng này được tạo bởi Web Server. 
+    // kiểm tra nếu có Authorization
     if (isset($_SERVER['Authorization'])) {
-
+        // loại bỏ khoảng trắng khi lấy được Authorization
 		$headers = trim($_SERVER["Authorization"]);
-
-	} else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { 
-
+	} else if (isset($_SERVER['HTTP_AUTHORIZATION'])) {  // check biến môi trường phía máy chủ
+        // loại bỏ khoảng trắng
 		$headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
-
 	} else if (function_exists('apache_request_headers')) {
         //Tìm nạp tất cả các tiêu đề yêu cầu HTTP từ yêu cầu hiện tại
 		$requestHeaders = apache_request_headers();
 
         // gộp 2 mảng lại với nhau, mảng 1 là key, mảng 2 là value
-        // Bản sửa lỗi phía máy chủ đối với lỗi trong các phiên bản Android cũ
         $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
 		if (isset($requestHeaders['Authorization'])) {
 			$headers = trim($requestHeaders['Authorization']);
@@ -78,7 +79,7 @@ function get_authorization_header() {
 }
 
 function get_bearer_token() {
-    $headers = get_authorization_header();
+    $headers = get_authorization_header();  // get authorization header
 	
     // nhận mã thông báo truy cập từ header
     if (!empty($headers)) {
@@ -89,5 +90,4 @@ function get_bearer_token() {
     }else {
         return null;
     }
-    
 }

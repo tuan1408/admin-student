@@ -11,16 +11,13 @@ include_once('../../config/database.php');
 include_once('../../model/students.php');
 include_once('../../libs/jwt.php');
 
-$database = new Database();  //tạo đối tượng từ lớp Database
-$db = $database->getConnection();  //gọi đến phương thức get để lấy kết nối csdl
-$response = array();
-
+// check isvalid jwt
 $bearer_token = get_bearer_token();
 $is_jwt_valid = is_jwt_valid($bearer_token);
-
-if(true) {
+if($is_jwt_valid) {
     $database = new Database();  //tạo đối tượng từ lớp Database
-    $db = $database->getConnection();  //gọi đến phương thức get để lấy kết nối csdl
+    $db = $database->getConnection();  //gọi đến phương thức getConnection để lấy kết nối csdl
+    $response = array();
 
     $item = new Students($db);  //tạo đối tượng từ lớp Students
 
@@ -28,46 +25,7 @@ if(true) {
     $itemCount = $records->num_rows; //trả về số hàng
     json_encode($itemCount);
 
-    $item->paginationPage();
+    $item->paginationPage(); // gọi đến phương thức paginationPage
+}else {
+    echo 'error';
 }
-
-
-// $sqlQuery = "SELECT COUNT(*) FROM students";
-// $result = $db->query($sqlQuery);
-// $itemCount = $result->num_rows;
-// var_dump($result);
-// var_dump($itemCount);
-// die;
-
-
-// $bearer_token = get_bearer_token();
-// $is_jwt_valid = is_jwt_valid($bearer_token);
-
-// if($is_jwt_valid) {
-    
-//     $records = $item->getStudents();  //gọi đến phương thức getStudent để lấy dữ liệu từ bảng
-//     $itemCount = $records->num_rows; //trả về số hàng
-//     json_encode($itemCount); // chuyển sang json
-
-//     if($itemCount > 0) {
-//         $studentsArr = array();  //tạo mảng
-//         $studentsArr["body"] = array(); //tạo tên định danh của phần tử (acces key)
-
-//         while ($row = $records->fetch_assoc()) { //gán kết quả vào mảng kết hợp, có thể loop
-//             array_push($studentsArr["body"], $row); // thêm dữ diệu từ $row vào mảng
-//         }
-//         http_response_code(200);  //status code http
-//         echo json_encode($studentsArr);
-//         // json_encode($studentsArr);
-//         return json_encode($studentsArr);
-//         // return $studentsArr;
-//     }else {
-//         http_response_code(404); //status code http
-//         echo json_encode(
-//             array("message" => "No record found.")
-//         );
-//     }
-// }else {
-//     echo 'error';
-// }
-

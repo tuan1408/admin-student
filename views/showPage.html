@@ -23,13 +23,9 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
-    
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
-    
     <link rel="stylesheet" href="./css/show.css">
 </head>
 <body>
@@ -37,24 +33,26 @@
     <div class="container mt-5">
 
         <div class="row">
-            <h1 class="col-l-9 col-md-8 mb-3 text-sm-start text-center">Danh sach sinh vien</h1>
+            <h1 class="col-l-9 col-md-8 mb-3 text-sm-start text-center">List Students</h1>
             <div class="col-l-3 col-md-4 text-center text-sm-end">
-                <button id="button__redirect-add" class="btn btn-primary h-100">+ Them moi sinh vien</button>
+                <button id="button__redirect-add" class="btn btn-primary h-100">+ Add Student</button>
+                <button id="button__redirect-home" class="btn btn-secondary h-100">Home</button>
+                <button id="button__redirect-logout" class="btn btn-danger h-100">Log Out</button>
             </div>
         </div>
 
-        <form action="post" id="form-search" class="row mt-5">
+        <form action="GET" id="form-search" class="row mt-5">
             <div class="col-md-3 mt-3">
-                <label for="name">Ho va Ten</label>
-                <input class="form-control" type="text" name="name" id="name" >
+                <label for="name">Name</label>
+                <input class="form-control" type="text" name="lastname" id="lastname" >
             </div>
             <div class="col-md-3 mt-3">
-                <label for="maso">Ma ho so</label>
-                <input class="form-control" type="text" name="maso" id="maso" >
+                <label for="maso">Profile Code</label>
+                <input class="form-control" type="text" name="profile_code" id="profile_code" >
             </div>
             <div class="col-md-3 mt-3">
-                <label for="masinhvien">Ma sinh vien</label>
-                <input class="form-control" type="text" name="masinhvien" id="masinhvien" >
+                <label for="masinhvien">Student Code</label>
+                <input class="form-control" type="text" name="student_code" id="student_code" >
             </div>
             <div class="col-md-3 mt-md-3">
                 <button class="btn btn-primary mt-4" type="submit">
@@ -63,11 +61,13 @@
             </div>
         </form>
 
+        <div id="notification" class="mt-5"></div>
+
         <div class="tables-container mt-5">
             <table class="table" id="table-id">
                 <thead class="table-primary">
                     <tr class=" mt-5">
-                        <th>STT</th>
+                        <th>ID</th>
                         <th>Ma ho so</th>
                         <th>Ma sinh vien</th>
                         <th>Ho Dem</th>
@@ -83,214 +83,25 @@
                     </tr>
                 </thead>
                 <tbody></tbody>
-                <!-- <tbody>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-title="STT">1</td>
-                        <td data-title="Ma ho so">TVU01</td>
-                        <td data-title="Ma sinh vien">12334556</td>
-                        <td data-title="Ho Ten">Bui minh </td>
-                        <td data-title="Ten">Tuan</td>
-                        <td data-title="Gioi Tinh">Nam</td>
-                        <td data-title="Ngay sinh">14/08/1999</td>
-                        <td data-title="So dien thoai">0942472911</td>
-                        <td data-title="Email">anguyenvan@gmail.com</td>
-                        <td data-title="Noi sinh">Quang Ninh</td>
-                        <td data-title="CMTND/CCCD">15000389362</td>
-                        <td data-title="Dia chi">Thanh xuan Ha noi</td>
-                        <td data-title="Hanh dong" class="">
-                          <button class="btn btn-primary mb-2"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <button class="btn btn-danger">
-                            <i class="fa-solid fa-trash"></i>
-                          </button>
-                        </td>
-                    </tr>
-
-                </tbody> -->
             </table>
+            <div class='pagination-container'>
+				<nav>
+				  <ul class="pagination justify-content-center align-items-center">
+                    <!-- <li data-page="prev" class="page-item">
+						<span class="page-link"> <i class="fa-solid fa-angle-left"></i> <span class=""></span></span>
+					</li> -->
+                    
+                    <!-- <li data-page="next" id="prev" class="page-item">
+						<span class="page-link"> <i class="fa-solid fa-angle-right"></i> <span class=""></span></span>
+					</li> -->
+				  </ul>
+				</nav>
+			</div>
         </div>
     </div>
     <script src="../views/js/validate.js"></script>
-    <script src="../views/js/studentPage.js"></script>
-
+    <script src="../views/services/httpService.js"></script>
+    <script src="../views/js/checkTimeToken.js"></script>
+    <script src="../views/js/showPage.js"></script>
 </body>
 </html>

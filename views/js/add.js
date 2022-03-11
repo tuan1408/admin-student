@@ -1,30 +1,39 @@
 $(document).ready(function () {
   var form = new Validator("#form-add");
 
-  var form = new Validator("#form-add");
-  form.onSubmit = function (formData) {
-    addStudent(formData);
-  };
-
-  $("#button-cancle").click(function () {
-    $(location).attr(
-      "href",
-      "../../../../student-project/views-test/showPage.html"
-    );
-  });
+  // get token from local storage
+  const token = localStorage.getItem("token");
+  // check hiệu lực token
+  if (!isTokenExpired(token)) {
+    //submit form
+    form.onSubmit = function (formData) {
+      addStudent(formData);
+    };
+    //cancle action
+    $("#button-cancle").click(function () {
+      $(location).attr(
+        "href",
+        "../../../../student-project/views/showPage.html"
+      );
+    });
+  } else {
+    alert("Login session expired! Please relogin");
+    window.location.assign("./login.html");
+  }
 });
+// hàm tạo student
 function addStudent(value) {
   console.log(12);
   var options = {};
   (options.url =
-    "http://localhost:8080/project/student-project/crud-student/api/students/create.php"),
+    BASE_URL + "/project/student-project/crud-student/api/students/create.php"),
     (options.method = "POST"),
     (options.beforeSend = function (request) {
       request.setRequestHeader(
         "Authorization",
         "Bearer " + localStorage.getItem("token")
       );
-    }),
+    }), // dữ liệu mang đi
     (options.data = {
       profile_code: value.profile_code,
       student_code: value.student_code,
@@ -50,7 +59,7 @@ function addStudent(value) {
       alert("Add new student success");
       $(location).attr(
         "href",
-        "../../../../student-project/views-test/showPage.html"
+        "../../../../student-project/views/showPage.html"
       );
     }),
     $.ajax(options);

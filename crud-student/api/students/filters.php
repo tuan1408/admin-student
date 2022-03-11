@@ -10,29 +10,32 @@ include_once('../../config/database.php');
 include_once('../../model/students.php');
 include_once('../../libs/jwt.php');
 
+// check isvalid jwt
 $bearer_token = get_bearer_token();
 $is_jwt_valid = is_jwt_valid($bearer_token);
-
-$lastname = isset($_GET['lastname']) ? $_GET['lastname'] : "";
-$profile_code = isset($_GET['profile_code']) ? $_GET['profile_code'] : "";
-$student_code = isset($_GET['student_code']) ? $_GET['student_code'] : "";
-
 if($is_jwt_valid) {
+    $database = new Database();  //tạo đối tượng từ lớp Database
+    $db = $database->getConnection();  //gọi đến phương thức getConnection để lấy kết nối csdl
+    // get data
+    $lastname = isset($_GET['lastname']) ? mysqli_real_escape_string($db,$_GET['lastname']) : "";
+    $profile_code = isset($_GET['profile_code']) ? mysqli_real_escape_string($db,$_GET['profile_code']) : "";
+    $student_code = isset($_GET['student_code']) ? mysqli_real_escape_string($db,$_GET['student_code']) : "";
+    // check dữ liệu nếu đúng thì thực hiện truy vấn
     if($lastname != "" || $profile_code != "" || $student_code != "") {
-        $database = new Database();  //tạo đối tượng từ lớp Database
-        $db = $database->getConnection();  //gọi đến phương thức getConnection để lấy kết nối csdl
-    
+        // lọc tất cả từ bảng students nếu giống
         $sqlQuery = "SELECT * FROM students WHERE 
             lastname  LIKE '%" .$lastname. "%' AND 
             profile_code LIKE '%" .$profile_code. "%' AND 
             student_code LIKE '%" .$student_code. "%'
         ";
-    
+        // truy vấn
         $result = $db->query($sqlQuery);
+        // lấy số hàng ảnh hưởng bởi truy vấn trên
         $countRow = $result -> num_rows;
-    
+        //tạo mảng rỗng
         $arrItems = array();
         if($countRow > 0) {
+            // gán vào một mảng kết hợp có thể lặp qua
             while($row = $result->fetch_assoc()) {
                 $records = array(
                     "id"=>$row["id"],
@@ -52,16 +55,15 @@ if($is_jwt_valid) {
                     "student_status"=>$row["student_status"],
                     "note"=>$row["note"],
                 );
+                //đẩy dữ liệu từ records vào arrayItems
                 array_push($arrItems,$records);
             }
             $arr = ['body'=>$arrItems,'status'=>200, 'rowCount'=>$countRow];
-            // var_dump($arr);
             echo json_encode($arr);
         }else {
             $arr = ['msg' => 'Record not found !!!', 'status' => 404, 'rowCount'=>$countRow];
             echo json_encode($arr);
         }
-    
     }
 }
 else {

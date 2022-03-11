@@ -1,9 +1,0 @@
-@media only screen and (max-width: 992px) {
-  .tables-container {
-    overflow-x: auto;
-  }
-}
-
-.page-link {
-  cursor: pointer;
-}
